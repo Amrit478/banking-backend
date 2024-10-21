@@ -1,4 +1,6 @@
 package com.banking.banking_backend.repository;
 
-public class UserRepository {
+//Need the annotation for jparepositry
+public class UserRepository extends JpaReposity<User, Long> {
+
 }
