@@ -1,4 +1,8 @@
 package com.banking.banking_backend.model;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import java.lang.annotation.Inherited;
 import javax.annotation.processing.Generated;
 
