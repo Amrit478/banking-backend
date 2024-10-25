@@ -1,12 +1,10 @@
 package com.banking.banking_backend.controller;
 
 import com.banking.banking_backend.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 import com.banking.banking_backend.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -16,17 +14,35 @@ public class UserController {
     private UserRepository userRepository;
 
     @PostMapping("/adduser")
-    User newUser(@RequestBody User newUser){
+    public User newUser(@RequestBody User newUser) {
         return userRepository.save(newUser);
     }
+
     @GetMapping("/users")
-    List<User> getAllUsers(){
-        return userRepository.findall();
-    }
-    @PostMapping
-    List<User> deluser(@RequestBody User newUser){
-        return userRepository.delete(newUser);
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
+    @PostMapping("/deluser")
+    public List<User> deluser(@RequestBody User user) {
+        userRepository.delete(user);
+        return userRepository.findAll();
+    }
 
+    @GetMapping("/getapproval")
+    public String getApproval(@RequestParam("balance") double balance) {
+        return balance > 100 ? "Approved for credit card" : "Rejected for credit card";
+    }
+
+    @PostMapping("/addmoney")
+    public User addMoney(@RequestParam("id") Long userId, @RequestParam("amount") double amount) {
+        User user = userRepository.findById(userId).orElseThrow();
+        user.setbalance(user.getbalance() + amount);
+        return userRepository.save(user);
+    }
+
+    @GetMapping("/checkbalance")
+    public double getAccountBalance(@RequestParam("id") Long userId) {
+        return userRepository.findById(userId).orElseThrow().getbalance();
+    }
 }
