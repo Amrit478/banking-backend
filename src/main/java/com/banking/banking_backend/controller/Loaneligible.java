@@ -1,5 +1,4 @@
 package com.banking.banking_backend.controller;
-
 import com.banking.banking_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,23 +9,17 @@ import com.banking.banking_backend.model.User;
 import java.util.List;
 
 @RestController
-public class UserController {
-
+public class Loaneligible {
+    
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/adduser")
-    User newUser(@RequestBody User newUser){
-        return userRepository.save(newUser);
+    @GetMapping("/Loanapplication"){
+        List<balances> getBalances(){
+            return userRepository.getById(id);
+        }
+        @PostMapping("/approved"){
+            //How much is the that 
+        }
     }
-    @GetMapping("/users")
-    List<User> getAllUsers(){
-        return userRepository.findall();
-    }
-    @PostMapping
-    List<User> deluser(@RequestBody User newUser){
-        return userRepository.delete(newUser);
-    }
-
-
 }

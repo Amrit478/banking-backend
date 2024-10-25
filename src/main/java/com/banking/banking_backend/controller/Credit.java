@@ -1,5 +1,4 @@
 package com.banking.banking_backend.controller;
-
 import com.banking.banking_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,23 +9,18 @@ import com.banking.banking_backend.model.User;
 import java.util.List;
 
 @RestController
-public class UserController {
-
+public class Credit {
+    
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/adduser")
-    User newUser(@RequestBody User newUser){
-        return userRepository.save(newUser);
+    @GetMapping("/getapproval")
+    List<Balance> balances;
+    if(balances > 100){
+        System.out.println("Approved for credit card");
     }
-    @GetMapping("/users")
-    List<User> getAllUsers(){
-        return userRepository.findall();
+    else {
+        System.out.println("Reject for credit card");
     }
-    @PostMapping
-    List<User> deluser(@RequestBody User newUser){
-        return userRepository.delete(newUser);
-    }
-
-
+    //Now write a method that how much that person is aprroved here
 }
