@@ -14,6 +14,11 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
+    private String username;
+    private String name;
+    private String email;
+    private int balance;
+    private int salary;
     public Long getId() {
         return id;
     }
@@ -38,11 +43,11 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    public int getAccountbalance() {
-        return Accountbalance;
+    public int getbalance() {
+        return balance;
     }
-    public void setAccountbalance(int accountbalance) {
-        Accountbalance = accountbalance;
+    public void setbalance(double balance) {
+        balance = balance;
     }
     public int getSalary() {
         return salary;
@@ -50,9 +55,6 @@ public class User {
     public void setSalary(int salary) {
         this.salary = salary;
     }
-    private String username;
-    private String name;
-    private String email;
-    private int Accountbalance;
-    private int salary;
+
+
 }
