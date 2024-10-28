@@ -1,60 +1,84 @@
 package com.banking.banking_backend.model;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
-import java.lang.annotation.Inherited;
-import javax.annotation.processing.Generated;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "user") // Optional, only if the table name differs from the class name
 public class User {
 
-    //Need annotations at the top for the Id, Entity and the GeneratedValue
-
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Specifying ID generation strategy
     private Long id;
     private String username;
     private String name;
     private String email;
-    private int balance;
+    private double balance;
     private int salary;
-    public Long getId() {
-        return id;
+
+    // Default constructor
+    public User() {
     }
-    public void setId(Long id) {
+
+    // Parameterized constructor
+    public User(Long id, String username, String name, String email, double balance, int salary) {
         this.id = id;
-    }
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
         this.username = username;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
         this.name = name;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
         this.email = email;
-    }
-    public int getbalance() {
-        return balance;
-    }
-    public void setbalance(double balance) {
-        balance = balance;
-    }
-    public int getSalary() {
-        return salary;
-    }
-    public void setSalary(int salary) {
+        this.balance = balance;
         this.salary = salary;
     }
 
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
 }
