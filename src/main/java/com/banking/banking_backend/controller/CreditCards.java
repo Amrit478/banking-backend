@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-
 @RestController
 @RequestMapping("/user")
 public class CreditCards {
@@ -19,9 +18,9 @@ public class CreditCards {
 
     // Check credit card approval
     @PostMapping("/approval")
-    public String getApproval(@RequestBody Map<String, Integer> request) {
-        int age = request.get("age");
-        int salary = request.get("salary");
+    public String getApproval(@RequestBody Map<String, String> request) {
+        int age = Integer.parseInt(request.get("age"));
+        int salary = Integer.parseInt(request.get("salary"));
         return (salary > 50000 && age >= 18) ? "Approved for credit card" : "Rejected for credit card";
     }
 }

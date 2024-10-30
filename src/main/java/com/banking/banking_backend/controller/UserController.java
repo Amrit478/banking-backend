@@ -23,7 +23,7 @@ public class UserController {
     }
 
     // Retrieve all users
-    @GetMapping("/alluser")
+    @GetMapping("/findall")
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -52,9 +52,5 @@ public class UserController {
         }
     }
 
-    // Placeholder for product exploration (update based on your product requirements)
-    @GetMapping("/exploreProducts")
-    public List<User> exploreProducts() {
-        return userRepository.findAll();
-    }
+
 }
