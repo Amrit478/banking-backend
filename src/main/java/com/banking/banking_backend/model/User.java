@@ -18,19 +18,21 @@ public class User {
     private String email;
     private double balance;
     private int salary;
+    private int rent;
 
     // Default constructor
     public User() {
     }
 
     // Parameterized constructor
-    public User(Long id, String username, String name, String email, double balance, int salary) {
+    public User(Long id, String username, String name, String email, double balance, int salary, int rent) {
         this.id = id;
         this.username = username;
         this.name = name;
         this.email = email;
         this.balance = balance;
         this.salary = salary;
+        this.rent = rent;
     }
 
     // Getters and Setters
@@ -57,6 +59,9 @@ public class User {
     public int getSalary() {
         return salary;
     }
+    public int getRent() {
+        return rent;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -80,5 +85,8 @@ public class User {
 
     public void setSalary(int salary) {
         this.salary = salary;
+    }
+    public void setRent(int rent) {
+        this.rent = rent;
     }
 }
