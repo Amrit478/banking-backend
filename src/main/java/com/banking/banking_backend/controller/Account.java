@@ -5,7 +5,7 @@ import com.banking.banking_backend.model.User;
 import com.banking.banking_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -16,20 +16,23 @@ public class Account {
 
     // Add money to a user’s balance
     @PostMapping("/addBalance")
-    public User addBalance(@RequestParam Long id, @RequestParam String amount) {
+    public User addBalance(@RequestBody Map<String, String> request) {
         try {
-            double parsedAmount = Double.parseDouble(amount); // Validating data type
+            Long id = Long.parseLong(request.get("id"));
+            double amount = Double.parseDouble(request.get("amount"));
             User user = userRepository.findById(id)
                     .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id));
-            user.setBalance(user.getBalance() + parsedAmount);
+            user.setBalance(user.getBalance() + amount);
             return userRepository.save(user);
         } catch (NumberFormatException e) {
             throw new Methodmismatch("balance", "number");
         }
     }
+
     // Check account balance
     @GetMapping("/balance")
-    public double getAccountBalance(@RequestParam Long id) {
+    public double getAccountBalance(@RequestBody Map<String, Long> request) {
+        Long id = request.get("id");
         return userRepository.findById(id)
                 .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id))
                 .getBalance();
@@ -37,10 +40,16 @@ public class Account {
 
     // Deduct money from a user’s balance
     @PostMapping("/deductBalance")
-    public User deductBalance(@RequestParam Long id, @RequestParam double amount) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id));
-        user.setBalance(user.getBalance() - amount);
-        return userRepository.save(user);
+    public User deductBalance(@RequestBody Map<String, String> request) {
+        try {
+            Long id = Long.parseLong(request.get("id"));
+            double amount = Double.parseDouble(request.get("amount"));
+            User user = userRepository.findById(id)
+                    .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id));
+            user.setBalance(user.getBalance() - amount);
+            return userRepository.save(user);
+        } catch (NumberFormatException e) {
+            throw new Methodmismatch("balance", "number");
+        }
     }
 }

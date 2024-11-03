@@ -29,5 +29,4 @@ public class ExploreProduct {
         }
         return userRepository.save(updateuser);
     }
-
 }
