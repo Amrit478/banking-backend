@@ -30,7 +30,9 @@ public class UserController {
 
     // Delete a user by ID
     @DeleteMapping("/deleteuser")
-    public String deleteUser(@RequestParam Long id) {
+    public String deleteUser(@RequestBody Map<String, Long> request) {
+        Long id = request.get("id");
+
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
             return "User deleted successfully.";
