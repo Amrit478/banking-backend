@@ -1,5 +1,4 @@
 package com.banking.banking_backend.model;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,13 +18,14 @@ public class User {
     private double balance;
     private int salary;
     private int rent;
+    private int age;
 
     // Default constructor
     public User() {
     }
 
     // Parameterized constructor
-    public User(Long id, String username, String name, String email, double balance, int salary, int rent) {
+    public User(Long id, String username, String name, String email, double balance, int salary, int rent, int age) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -33,6 +33,7 @@ public class User {
         this.balance = balance;
         this.salary = salary;
         this.rent = rent;
+        this.age = age;
     }
 
     // Getters and Setters
@@ -62,6 +63,9 @@ public class User {
     public int getRent() {
         return rent;
     }
+    public int getAge() {
+        return age;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -88,5 +92,9 @@ public class User {
     }
     public void setRent(int rent) {
         this.rent = rent;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
