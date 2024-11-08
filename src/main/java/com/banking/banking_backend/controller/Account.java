@@ -5,6 +5,8 @@ import com.banking.banking_backend.model.User;
 import com.banking.banking_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -14,42 +16,27 @@ public class Account {
     @Autowired
     private UserRepository userRepository;
 
-    // Add money to a user’s balance
-    @PostMapping("/addBalance")
-    public User addBalance(@RequestBody Map<String, String> request) {
-        try {
-            Long id = Long.parseLong(request.get("id"));
-            double amount = Double.parseDouble(request.get("amount"));
-            User user = userRepository.findById(id)
-                    .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id));
-            user.setBalance(user.getBalance() + amount);
-            return userRepository.save(user);
-        } catch (NumberFormatException e) {
-            throw new Methodmismatch("balance", "number");
-        }
+    // Retrieve all users
+    @GetMapping("/findall")
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+    // Create a new user
+    @PostMapping("/adduser")
+    public User addUser(@RequestBody User newUser) {
+        return userRepository.save(newUser);
     }
 
-    // Check account balance
-    @GetMapping("/balance")
-    public double getAccountBalance(@RequestBody Map<String, Long> request) {
+    // Delete a user by ID
+    @DeleteMapping("/deleteuser")
+    public String deleteUser(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id))
-                .getBalance();
-    }
 
-    // Deduct money from a user’s balance
-    @PostMapping("/deductBalance")
-    public User deductBalance(@RequestBody Map<String, String> request) {
-        try {
-            Long id = Long.parseLong(request.get("id"));
-            double amount = Double.parseDouble(request.get("amount"));
-            User user = userRepository.findById(id)
-                    .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id));
-            user.setBalance(user.getBalance() - amount);
-            return userRepository.save(user);
-        } catch (NumberFormatException e) {
-            throw new Methodmismatch("balance", "number");
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return "User deleted successfully.";
+        } else {
+            throw new UsernotFoundException("User not found with id: " + id);
         }
     }
 }
