@@ -18,6 +18,8 @@ public class CreditCards {
     @Autowired
     private UserRepository userRepository;
 
+    //Need to make age in the database so the system can work
+
     @PostMapping("/approval")
     public String getApproval(@RequestBody Map<String, String> request) {
         int id = Integer.parseInt(request.get("id"));
@@ -39,6 +41,7 @@ public class CreditCards {
         }
     }
 
+    //This method works well
     // Check a user by ID for credit increase eligibility based on balance and apply increase if eligible
     @PostMapping("/CreditIncrease")
     public String checkCreditIncreaseEligibility(@RequestBody Map<String, Long> request) {

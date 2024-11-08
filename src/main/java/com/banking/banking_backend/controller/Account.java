@@ -28,6 +28,7 @@ public class Account {
     }
 
     // Delete a user by ID
+    //It does delete user id but the space does not get empty to use
     @DeleteMapping("/deleteuser")
     public String deleteUser(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");

@@ -15,15 +15,17 @@ public class LoanApproval {
     @Autowired
     private UserRepository userRepository;
 
+    //Need to add age entity in the database
+
     @PostMapping("/loanApproval")
     public String getLoanApprove(@RequestBody Map<String, Object> request) {
         Long id = Long.valueOf((int) request.get("id")); // Get the user ID from the request
-        double rent = (double) request.get("rent");
+        int rent = (int) request.get("rent");  // Retrieve rent as Integer
         int age = (int) request.get("age");
         int salary = (int) request.get("salary");
 
         // Check if user exists by ID
-        User user = userRepository.findById(id).orElseThrow(() -> new UsernotFoundException("User not found with id: " + id));
+        User user = userRepository.findById(id).orElseThrow(() -> new UsernotFoundException("User  not found with id: " + id));
 
         // Loan approval criteria
         if (salary > 50000 && age >= 18 && rent < (0.4 * salary)) {
