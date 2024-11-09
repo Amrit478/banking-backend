@@ -15,8 +15,6 @@ public class Balance {
     @Autowired
     private UserRepository userRepository;
 
-//These all methods works well with everything
-
     // Check account balance
     @GetMapping("/checkbalance")
     public double getAccountBalance(@RequestBody Map<String, Long> request) {
@@ -40,6 +38,7 @@ public class Balance {
             throw new Methodmismatch("balance", "number");
         }
     }
+
     // Add money to a user’s balance
     @PostMapping("/addBalance")
     public User addBalance(@RequestBody Map<String, String> request) {
