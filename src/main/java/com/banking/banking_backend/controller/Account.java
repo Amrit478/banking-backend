@@ -4,6 +4,7 @@ import com.banking.banking_backend.exception.UsernotFoundException;
 import com.banking.banking_backend.model.User;
 import com.banking.banking_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class Account {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
     // Create a new user
     @PostMapping("/adduser")
     public User addUser(@RequestBody User newUser) {
@@ -39,5 +41,25 @@ public class Account {
         } else {
             throw new UsernotFoundException("User not found with id: " + id);
         }
+    }
+
+    //Need to update user
+    @PutMapping("/updateuser")
+    public ResponseEntity<User> updateUser(@RequestBody User userDetails) {
+        Long id = userDetails.getId(); // Extract `id` from the request body
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UsernotFoundException("User not found with id " + id));
+
+        // Update user details
+        user.setUsername(userDetails.getUsername());
+        user.setName(userDetails.getName());
+        user.setEmail(userDetails.getEmail());
+        user.setBalance(userDetails.getBalance());
+        user.setSalary(userDetails.getSalary());
+        user.setRent(userDetails.getRent());
+
+        User updatedUser = userRepository.save(user);
+        return ResponseEntity.ok(updatedUser);
     }
 }
