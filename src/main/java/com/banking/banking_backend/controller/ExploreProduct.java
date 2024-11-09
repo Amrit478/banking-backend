@@ -22,11 +22,4 @@ public class ExploreProduct {
         return userRepository.findAll();
     }
 
-    @PostMapping("/Updateuserprofile")
-    public User Updateuser(@RequestBody User updateuser) {
-        if (updateuser.getId() == null || !userRepository.existsById(updateuser.getId())) {
-            throw new UsernotFoundException("User not found with id: " + updateuser.getId());
-        }
-        return userRepository.save(updateuser);
-    }
 }
