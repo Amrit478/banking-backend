@@ -8,14 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/user")
 public class LoanApproval {
 
     @Autowired
     private UserRepository userRepository;
-
-    //Need to add age entity in the database
 
     @PostMapping("/loanApproval")
     public String getLoanApprove(@RequestBody Map<String, Object> request) {

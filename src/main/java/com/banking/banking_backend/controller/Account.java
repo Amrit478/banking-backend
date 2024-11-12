@@ -1,5 +1,5 @@
 package com.banking.banking_backend.controller;
-import com.banking.banking_backend.exception.Methodmismatch;
+
 import com.banking.banking_backend.exception.UsernotFoundException;
 import com.banking.banking_backend.model.User;
 import com.banking.banking_backend.repository.UserRepository;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/user")
 public class Account {
@@ -18,35 +19,34 @@ public class Account {
     private UserRepository userRepository;
 
     // Retrieve all users
-    @GetMapping("/findall")
+    @GetMapping("/all")
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     // Create a new user
-    @PostMapping("/adduser")
+    @PostMapping("/create")
     public User addUser(@RequestBody User newUser) {
         return userRepository.save(newUser);
     }
 
     // Delete a user by ID
-    //It does delete user id but the space does not get empty to use
-    @DeleteMapping("/deleteuser")
-    public String deleteUser(@RequestBody Map<String, Long> request) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteUser(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");
 
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
-            return "User deleted successfully.";
+            return ResponseEntity.ok("User deleted successfully.");
         } else {
             throw new UsernotFoundException("User not found with id: " + id);
         }
     }
 
-    //Need to update user
-    @PutMapping("/updateuser")
+    // Update an existing user
+    @PutMapping("/update")
     public ResponseEntity<User> updateUser(@RequestBody User userDetails) {
-        Long id = userDetails.getId(); // Extract `id` from the request body
+        Long id = userDetails.getId();
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UsernotFoundException("User not found with id " + id));
@@ -58,6 +58,7 @@ public class Account {
         user.setBalance(userDetails.getBalance());
         user.setSalary(userDetails.getSalary());
         user.setRent(userDetails.getRent());
+        user.setAge(userDetails.getAge());
 
         User updatedUser = userRepository.save(user);
         return ResponseEntity.ok(updatedUser);
