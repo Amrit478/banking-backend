@@ -17,7 +17,7 @@ public class Balance {
     private UserRepository userRepository;
 
     // Check account balance
-    @GetMapping("/checkbalance")
+    @GetMapping("/check")
     public double getAccountBalance(@RequestBody Map<String, Long> request) {
         Long id = request.get("id");
         return userRepository.findById(id)
@@ -26,7 +26,7 @@ public class Balance {
     }
 
     // Deduct money from a user’s balance
-    @PostMapping("/deductBalance")
+    @PostMapping("/deduct")
     public User deductBalance(@RequestBody Map<String, String> request) {
         try {
             Long id = Long.parseLong(request.get("id"));
@@ -41,7 +41,7 @@ public class Balance {
     }
 
     // Add money to a user’s balance
-    @PostMapping("/addBalance")
+    @PostMapping("/add")
     public User addBalance(@RequestBody Map<String, String> request) {
         try {
             Long id = Long.parseLong(request.get("id"));
