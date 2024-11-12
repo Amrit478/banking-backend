@@ -16,7 +16,7 @@ public class LoanApproval {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/loanApproval")
+    @PostMapping("/loan")
     public String getLoanApprove(@RequestBody Map<String, Object> request) {
         Long id = Long.valueOf((int) request.get("id")); // Get the user ID from the request
         int rent = (int) request.get("rent");  // Retrieve rent as Integer
