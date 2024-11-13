@@ -16,30 +16,6 @@ public class Balance {
     @Autowired
     private UserRepository userRepository;
 
-    // Check account balance
-    @GetMapping("/check")
-    public double getAccountBalance(@RequestBody Map<String, Long> request) {
-        Long id = request.get("id");
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id))
-                .getBalance();
-    }
-
-    // Deduct money from a user’s balance
-    @PostMapping("/deduct")
-    public User deductBalance(@RequestBody Map<String, String> request) {
-        try {
-            Long id = Long.parseLong(request.get("id"));
-            double amount = Double.parseDouble(request.get("amount"));
-            User user = userRepository.findById(id)
-                    .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id));
-            user.setBalance(user.getBalance() - amount);
-            return userRepository.save(user);
-        } catch (NumberFormatException e) {
-            throw new Methodmismatch("balance", "number");
-        }
-    }
-
     // Add money to a user’s balance
     @PostMapping("/add")
     public User addBalance(@RequestBody Map<String, String> request) {
@@ -54,4 +30,27 @@ public class Balance {
             throw new Methodmismatch("balance", "number");
         }
     }
+    // Deduct money from a user’s balance
+    @PostMapping("/deduct")
+    public User deductBalance(@RequestBody Map<String, String> request) {
+        try {
+            Long id = Long.parseLong(request.get("id"));
+            double amount = Double.parseDouble(request.get("amount"));
+            User user = userRepository.findById(id)
+                    .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id));
+            user.setBalance(user.getBalance() - amount);
+            return userRepository.save(user);
+        } catch (NumberFormatException e) {
+            throw new Methodmismatch("balance", "number");
+        }
+    }
+    // Check account balance
+    @GetMapping("/check")
+    public double getAccountBalance(@RequestParam Long id) {  // Use @RequestParam for query parameter
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id))
+                .getBalance();
+    }
+
+
 }
