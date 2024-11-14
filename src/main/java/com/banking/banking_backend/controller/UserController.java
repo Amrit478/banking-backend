@@ -6,20 +6,19 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/user/auth")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestParam String username, @RequestParam String password) {
-        boolean isAuthenticated = userService.authenticateUser(username, password);
-
-        if (isAuthenticated) {
-            return ResponseEntity.ok("Login successful!");
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestParam String username, @RequestParam String password) {
+        boolean isRegistered = userService.registerUser(username, password);
+        if (isRegistered) {
+            return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
         }
     }
 }
