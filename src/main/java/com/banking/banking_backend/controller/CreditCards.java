@@ -1,12 +1,9 @@
 package com.banking.banking_backend.controller;
-
 import com.banking.banking_backend.exception.UsernotFoundException;
 import com.banking.banking_backend.model.User;
 import com.banking.banking_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 

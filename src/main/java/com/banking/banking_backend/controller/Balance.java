@@ -1,5 +1,4 @@
 package com.banking.banking_backend.controller;
-
 import com.banking.banking_backend.exception.Methodmismatch;
 import com.banking.banking_backend.exception.UsernotFoundException;
 import com.banking.banking_backend.model.User;
@@ -30,6 +29,7 @@ public class Balance {
             throw new Methodmismatch("balance", "number");
         }
     }
+
     // Deduct money from a user’s balance
     @PostMapping("/deduct")
     public User deductBalance(@RequestBody Map<String, String> request) {
@@ -44,13 +44,23 @@ public class Balance {
             throw new Methodmismatch("balance", "number");
         }
     }
-    // Check account balance
+
     @GetMapping("/check")
-    public double getAccountBalance(@RequestParam Long id) {  // Use @RequestParam for query parameter
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id))
-                .getBalance();
+    public double getAccountBalance(@RequestBody Map<String, String> request) {
+        try {
+            Long id = Long.parseLong(request.get("id"));  // Extract the id from the request body
+            User user = userRepository.findById(id)
+                    .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id));
+            return user.getBalance();  // Return the user's balance
+        } catch (NumberFormatException e) {
+            throw new Methodmismatch("id", "number");  // Handle invalid ID format
+        }
     }
-
-
 }
+// Check account balance
+//@GetMapping("/check")
+//public double getAccountBalance(@RequestParam Long id) {  // Use @RequestParam for query parameter
+//    return userRepository.findById(id)
+//            .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id))
+//            .getBalance();
+//}

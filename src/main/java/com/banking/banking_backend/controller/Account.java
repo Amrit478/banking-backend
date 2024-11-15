@@ -1,5 +1,4 @@
 package com.banking.banking_backend.controller;
-
 import com.banking.banking_backend.exception.UsernotFoundException;
 import com.banking.banking_backend.model.User;
 import com.banking.banking_backend.repository.UserRepository;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/user")
 public class Account {
@@ -52,7 +51,6 @@ public class Account {
                 .orElseThrow(() -> new UsernotFoundException("User not found with id " + id));
 
         // Update user details
-        user.setUsername(userDetails.getUsername());
         user.setName(userDetails.getName());
         user.setEmail(userDetails.getEmail());
         user.setBalance(userDetails.getBalance());
