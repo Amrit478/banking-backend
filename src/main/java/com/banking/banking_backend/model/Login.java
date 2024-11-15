@@ -1,13 +1,19 @@
 package com.banking.banking_backend.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "user")
 public class Login {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String username;
     private String password;
 
-    // Constructors, getters, and setters
-    public Login() {}
+    public Login(){
 
-    public Login(String username, String password) {
+    };
+    public Login(String username, String password){
         this.username = username;
         this.password = password;
     }
@@ -27,5 +33,4 @@ public class Login {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }
