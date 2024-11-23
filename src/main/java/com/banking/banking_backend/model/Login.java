@@ -7,15 +7,28 @@ import jakarta.persistence.*;
 public class Login {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; // Primary key
+
+    @Column(nullable = false, unique = true)
     private String username;
+
+    @Column(nullable = false)
     private String password;
 
-    public Login(){
+    public Login() {}
 
-    };
-    public Login(String username, String password){
+    public Login(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    // Getters and setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {

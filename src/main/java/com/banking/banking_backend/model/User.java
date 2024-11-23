@@ -17,15 +17,17 @@ public class User {
         private String name;
         private String email;
         private double balance;
-        private int salary;
-        private int rent;
+        private double salary;
+        private double rent;
         private int age;
+        private double creditbalance;
+        private double loan;
 
         public User(){
 
         };
 
-        public User(Long id, String username, String password, String name, String email, double balance, int salary, int rent, int age) {
+        public User(Long id, String username, String password, String name, String email, double balance, double salary, double rent, int age, double creditbalance, double loan) {
             this.id = id;
             this.username = username;
             this.password = password;
@@ -35,6 +37,8 @@ public class User {
             this.salary = salary;
             this.rent = rent;
             this.age = age;
+            this.creditbalance = creditbalance;
+            this.loan = loan;
         }
 
         public Long getId() {
@@ -85,19 +89,19 @@ public class User {
             this.balance = balance;
         }
 
-        public int getSalary() {
+        public double getSalary() {
             return salary;
         }
 
-        public void setSalary(int salary) {
+        public void setSalary(double salary) {
             this.salary = salary;
         }
 
-        public int getRent() {
+        public double getRent() {
             return rent;
         }
 
-        public void setRent(int rent) {
+        public void setRent(double rent) {
             this.rent = rent;
         }
 
@@ -108,4 +112,19 @@ public class User {
         public void setAge(int age) {
             this.age = age;
         }
+        public double getCreditbalance(){
+            return creditbalance;
+        }
+
+    public void setCreditbalance(double creditbalance) {
+        this.creditbalance = creditbalance;
     }
+
+    public double getLoan() {
+        return loan;
+    }
+
+    public void setLoan(double loan) {
+        this.loan = loan;
+    }
+}
