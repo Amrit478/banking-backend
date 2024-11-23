@@ -44,23 +44,11 @@ public class Balance {
             throw new Methodmismatch("balance", "number");
         }
     }
-
-    @GetMapping("/check")
-    public double getAccountBalance(@RequestBody Map<String, String> request) {
-        try {
-            Long id = Long.parseLong(request.get("id"));  // Extract the id from the request body
-            User user = userRepository.findById(id)
-                    .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id));
-            return user.getBalance();  // Return the user's balance
-        } catch (NumberFormatException e) {
-            throw new Methodmismatch("id", "number");  // Handle invalid ID format
-        }
-    }
-}
 // Check account balance
-//@GetMapping("/check")
-//public double getAccountBalance(@RequestParam Long id) {  // Use @RequestParam for query parameter
-//    return userRepository.findById(id)
-//            .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id))
-//            .getBalance();
-//}
+        @GetMapping("/check")
+        public double getAccountBalance(@RequestParam Long id) {  // Use @RequestParam for query parameter
+            return userRepository.findById(id)
+                    .orElseThrow(() -> new UsernotFoundException("User not found with id: " + id))
+                    .getBalance();
+        }
+}

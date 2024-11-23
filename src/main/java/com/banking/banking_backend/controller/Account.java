@@ -3,13 +3,14 @@ import com.banking.banking_backend.exception.UsernotFoundException;
 import com.banking.banking_backend.model.User;
 import com.banking.banking_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
-//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/user")
 public class Account {
@@ -31,14 +32,19 @@ public class Account {
 
     // Delete a user by ID
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteUser(@RequestBody Map<String, Long> request) {
-        Long id = request.get("id");
+    public ResponseEntity<String> deleteUser(@RequestBody Map<String, Object> request) {
+        // Get the username and name from the request
+        String username = (String) request.get("username");
+        String name = (String) request.get("name");
 
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
+        // Fetch the user by username
+        User user = userRepository.findByUsername(username);
+        // Check if name matches
+        if (user.getName().equals(name)) {
+            userRepository.delete(user); // Delete the user
             return ResponseEntity.ok("User deleted successfully.");
         } else {
-            throw new UsernotFoundException("User not found with id: " + id);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User details do not match.");
         }
     }
 
